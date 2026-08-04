@@ -51,4 +51,4 @@ Then: probe any point to see the dominant ray paths drawn on the plan, add neigh
 
 TypeScript, React, Vite, Zustand. No runtime dependencies beyond that, no network calls, no build step needed to read the physics: it lives in `src/physics` and `src/engine`.
 
-MIT licensed.
+License: See the LICENSE file.
