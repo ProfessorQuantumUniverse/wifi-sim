@@ -1,0 +1,25 @@
+@import 'tailwindcss';
+
+@theme {
+  --spacing-90: 22.5rem;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  background: #020617;
+  color: #e2e8f0;
+  overscroll-behavior: none;
+}
+
+/* Keep range inputs compact and consistent across browsers. */
+input[type='range'] {
+  height: 1rem;
+}
