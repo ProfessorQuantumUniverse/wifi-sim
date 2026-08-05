@@ -1,28 +1,68 @@
 {
   "name": "wifi-sim",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "description": "Physically-based indoor Wi-Fi planning suite (3D ray tracing, ITU-R P.2040 materials)",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
+  "author": "Lorenzo Bay-Mueller",
+  "homepage": "https://professorquantumuniverse.github.io/wifi-sim/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ProfessorQuantumUniverse/wifi-sim.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ProfessorQuantumUniverse/wifi-sim/issues"
+  },
+  "keywords": [
+    "wifi",
+    "wlan",
+    "802.11",
+    "ray-tracing",
+    "propagation",
+    "site-survey",
+    "coverage",
+    "heatmap",
+    "itu-r-p2040",
+    "utd"
+  ],
+  "bin": {
+    "wifi-sim": "bin/wifi-sim.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "LICENSE",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -b --noEmit"
-  },
-  "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "zustand": "^5.0.8"
+    "start": "node bin/wifi-sim.js",
+    "typecheck": "tsc -b --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.14",
+    "@types/node": "^26.1.1",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "tailwindcss": "^4.1.14",
     "typescript": "^5.9.3",
-    "vite": "^7.1.9"
+    "vite": "^7.1.9",
+    "vitepress": "^1.6.4",
+    "vitest": "^4.1.10",
+    "zustand": "^5.0.8"
   }
 }

@@ -162,7 +162,7 @@ export interface RestoreResult {
 }
 
 /**
- * Load a project into the stores. The heatmap is deliberately not persisted —
+ * Load a project into the stores. The heatmap is deliberately not persisted:
  * it is a derived product that can be several megabytes and would go stale the
  * moment any setting changed; the "Compute coverage" button regenerates it.
  */

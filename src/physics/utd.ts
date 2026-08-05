@@ -1,5 +1,5 @@
 /**
- * Uniform Theory of Diffraction — wedge diffraction coefficient.
+ * Uniform Theory of Diffraction, wedge diffraction coefficient.
  *
  * Kouyoumjian, R. G. and Pathak, P. H., "A uniform geometrical theory of
  * diffraction for an edge in a perfectly conducting surface", Proc. IEEE 62(11),
@@ -60,12 +60,19 @@ function aFactor(beta: number, n: number, sign: 1 | -1): number {
   return 2 * Math.cos(inner) * Math.cos(inner)
 }
 
-/** cot with the singularity at multiples of pi clamped, where F() cancels it. */
-function safeCot(x: number): number {
-  const s = Math.sin(x)
-  if (Math.abs(s) < 1e-8) return Math.sign(s || 1) * 1e8
-  return Math.cos(x) / s
-}
+/**
+ * How close the cotangent argument may get to a multiple of pi before the
+ * limiting form below is used instead of the product.
+ *
+ * The product cot(arg) * F(k*L*a) is finite everywhere, but each factor alone
+ * is not: on a shadow or reflection boundary the cotangent diverges while the
+ * transition function goes to zero. Evaluating them separately there gives
+ * Infinity * 0, so the term that is supposed to cancel the geometrical-optics
+ * discontinuity silently disappears and the field collapses. That is not an
+ * exotic case: a straight wall end and a regular evaluation grid put receiver
+ * points exactly on the boundary routinely.
+ */
+const SINGULARITY_TOLERANCE = 1e-6
 
 export interface UtdInput {
   /** Wavenumber 2*pi/lambda, 1/m. */
@@ -101,9 +108,29 @@ export function utdDiffractionCoefficient(input: UtdInput): Complex {
   const plus = phi + phiPrime
 
   const term = (beta: number, sign: 1 | -1, coeff: Complex | null): Complex => {
-    const cot = safeCot((Math.PI + sign * beta) / (2 * n))
-    const f = fresnelTransition(k * L * aFactor(beta, n, sign))
-    const base = cScale(f, cot)
+    const arg = (Math.PI + sign * beta) / (2 * n)
+    const offset = arg - Math.round(arg / Math.PI) * Math.PI
+
+    let base: Complex
+    if (Math.abs(offset) < SINGULARITY_TOLERANCE) {
+      // On the boundary the product has the finite limit
+      //   cot(arg) * F(k*L*a)  ->  sgn(offset) * n * sqrt(2*pi*k*L) * exp(j*pi/4),
+      // which follows from a -> 2*sin^2(n*offset) and F(X) -> sqrt(pi*X)*exp(j*pi/4).
+      // The two sides of the boundary differ only in this sign, so either
+      // branch gives the same half-strength magnitude exactly on it. That is
+      // the physically right answer either way: a ray that grazes the edge is
+      // treated as blocked, so the diffracted term alone has to carry the
+      // half-strength field the boundary is defined by.
+      const side = offset < 0 ? -1 : 1
+      base = cScale(
+        C(Math.SQRT1_2, Math.SQRT1_2),
+        side * n * Math.sqrt(2 * Math.PI * k * L),
+      )
+    } else {
+      const cot = Math.cos(arg) / Math.sin(arg)
+      const f = fresnelTransition(k * L * aFactor(beta, n, sign))
+      base = cScale(f, cot)
+    }
     return coeff ? cMul(base, coeff) : base
   }
 

@@ -1,0 +1,60 @@
+name: A floorplan the tracer handles badly
+description: The wall tracing does not work on your plan
+title: 'Tracing: '
+labels: ['tracing', 'help wanted']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Tracing is where most people give up, and the defaults can only get
+        better against real drawings. A plan that fights back is genuinely
+        useful to have.
+
+        Before filing, it is worth a look at the
+        [tracing guide](https://professorquantumuniverse.github.io/wifi-sim/docs/guide/floorplan)
+        and the
+        [troubleshooting page](https://professorquantumuniverse.github.io/wifi-sim/docs/guide/troubleshooting),
+        which cover the usual cases.
+
+  - type: textarea
+    id: what-happens
+    attributes:
+      label: What happens
+      description: What does the red mask look like, and what do the traced walls look like?
+      placeholder: |
+        The hatching in the bathroom is read as wall no matter what I set. Raising
+        the min stroke half-width past 4 px kills it, but by then the 100 mm
+        partitions have gone as well.
+    validations:
+      required: true
+
+  - type: textarea
+    id: plan
+    attributes:
+      label: The floorplan
+      description: |
+        Drag the image in here.
+
+        **Only attach a plan you are willing to have public.** If you cannot
+        share the real one, a redrawn version with the same character is still
+        useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: settings
+    attributes:
+      label: What you tried
+      description: |
+        Which sliders, and what values. Attaching the `.wifisim` file is even
+        better, because it carries every setting.
+    validations:
+      required: false
+
+  - type: input
+    id: origin
+    attributes:
+      label: Where the plan came from
+      description: A CAD export, a scan, a photo of a print, an estate agent listing, something else.
+    validations:
+      required: false

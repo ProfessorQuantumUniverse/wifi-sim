@@ -7,3 +7,7 @@ dist-ssr
 *.tsbuildinfo
 
 .claude
+
+# VitePress build output and its dependency cache.
+docs/.vitepress/dist
+docs/.vitepress/cache

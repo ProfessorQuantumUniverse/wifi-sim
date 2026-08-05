@@ -11,12 +11,12 @@ import { Explainer, WorkflowSteps } from './Workflow'
 import { useWorkflowSteps } from './useWorkflowSteps'
 
 const FREQ_PRESETS = [
-  { value: '2.412', label: '2.4 GHz — ch. 1 (2412 MHz)' },
-  { value: '2.442', label: '2.4 GHz — ch. 7 (2442 MHz)' },
-  { value: '5.220', label: '5 GHz — ch. 44 (5220 MHz)' },
-  { value: '5.500', label: '5 GHz — ch. 100 (5500 MHz)' },
-  { value: '5.745', label: '5 GHz — ch. 149 (5745 MHz)' },
-  { value: '6.135', label: '6 GHz — ch. 37 (6135 MHz)' },
+  { value: '2.412', label: '2.4 GHz, ch. 1 (2412 MHz)' },
+  { value: '2.442', label: '2.4 GHz, ch. 7 (2442 MHz)' },
+  { value: '5.220', label: '5 GHz, ch. 44 (5220 MHz)' },
+  { value: '5.500', label: '5 GHz, ch. 100 (5500 MHz)' },
+  { value: '5.745', label: '5 GHz, ch. 149 (5745 MHz)' },
+  { value: '6.135', label: '6 GHz, ch. 37 (6135 MHz)' },
 ]
 
 export function ScenePanel() {
@@ -170,7 +170,7 @@ export function ScenePanel() {
         <SelectField
           label="Apply one build-up to all walls"
           value={''}
-          options={[{ value: '', label: '— pick to apply —' }, ...typeOptions]}
+          options={[{ value: '', label: 'pick to apply' }, ...typeOptions]}
           onChange={(v) => v && setWallTypeForAll(v)}
           help="Bulk assignment after tracing; individual walls can then be corrected."
         />
@@ -325,7 +325,7 @@ export function ScenePanel() {
 
       <Section title="Build-up inspector" subtitle="What each construction actually does to the signal">
         <Explainer>
-          A “build-up” is the layer stack of one construction — e.g. 15 mm plaster / 175 mm brick /
+          A “build-up” is the layer stack of one construction, for example 15 mm plaster / 175 mm brick /
           15 mm plaster. Every layer's permittivity and conductivity comes from{' '}
           <b>ITU-R P.2040 Table 3</b>; only the thicknesses are yours to set. The two charts below
           are the exact solution for that stack, so you can check a wall before trusting the map.
@@ -445,7 +445,7 @@ function OpeningEditor({
         value={opening.frameTypeId}
         options={typeOptions}
         onChange={(v) => onChange({ frameTypeId: v })}
-        help="An aluminium frame or mullion is a metal surface and reflects strongly — it is modelled separately from the glass, not averaged into it."
+        help="An aluminium frame or mullion is a metal surface and reflects strongly, so it is modelled separately from the glass, not averaged into it."
       />
       <div className="grid grid-cols-2 gap-2">
         <NumberField
@@ -557,7 +557,7 @@ function LayerStackEditor({
               }}
               className="w-full rounded border border-slate-700 bg-slate-900 px-1.5 py-1 text-[11px] text-slate-100"
             >
-              <option value="">— custom —</option>
+              <option value="">custom</option>
               {REBAR_PRESETS.map((p) => (
                 <option key={p.id} value={p.id}>
                   {p.name}
@@ -654,7 +654,7 @@ function CustomMaterialForm({
       <p className="text-[10px] leading-snug text-slate-500">
         ITU-R P.2040 characterises a limited set of materials. PVC window profiles, screed, tile,
         carpet, mineral wool and Low-E coatings are not among them. Add them here with the source you
-        took the values from — the citation is stored with the result and appears in the report.
+        took the values from. The citation is stored with the result and appears in the report.
       </p>
       <label className="block">
         <span className="text-xs font-medium text-slate-300">Name</span>
@@ -687,7 +687,7 @@ function CustomMaterialForm({
         <ul className="space-y-1 text-[10px] text-slate-500">
           {existing.map((m: MaterialDefinition) => (
             <li key={m.id}>
-              <span className="text-slate-300">{m.name}</span> — ε′ {m.a}, σ {m.c} S/m
+              <span className="text-slate-300">{m.name}</span>: ε′ {m.a}, σ {m.c} S/m
             </li>
           ))}
         </ul>

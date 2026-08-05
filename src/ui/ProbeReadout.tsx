@@ -24,7 +24,7 @@ export function ProbeReadout() {
             {probe.point.z.toFixed(2)} m
           </h3>
           <p className="text-[10px] text-slate-500">
-            Served by {ap?.name ?? '—'}
+            Served by {ap?.name ?? '-'}
             {ap ? ` · ${ap.band} GHz ch ${ap.channel} · ${ap.widthMHz} MHz` : ''}
           </p>
         </div>

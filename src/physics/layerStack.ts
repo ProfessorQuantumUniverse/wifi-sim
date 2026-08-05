@@ -3,7 +3,7 @@
  * exactly with the characteristic-matrix (Abeles) method.
  *
  * Reference formulation: H. A. Macleod, "Thin-Film Optical Filters", 4th ed.,
- * CRC Press 2010, ch. 2 — the same algebra ITU-R P.2040 Annex 1 sec. 3 uses for
+ * CRC Press 2010, ch. 2, which is the same algebra ITU-R P.2040 Annex 1 sec. 3 uses for
  * its single-slab result, generalised to N layers.
  *
  * Each layer contributes
@@ -20,8 +20,8 @@
  *
  * Because it is exact, this automatically reproduces the internal multiple
  * reflections, the half-wave thickness resonances that make one wall behave very
- * differently at 2.4 and 5 GHz, and Brewster-angle behaviour — none of which a
- * per-wall constant-dB table can represent.
+ * differently at 2.4 and 5 GHz, and Brewster-angle behaviour. None of those can be represented by a
+ * per-wall constant-dB table.
  *
  * A conductive mesh inside the build-up is inserted as a zero-thickness shunt
  * admittance sheet, matrix [[1, 0], [y, 1]].
@@ -45,7 +45,7 @@ import { evaluateWireGrid, type WireGrid, type WireGridResult } from './wireGrid
 export type Polarisation = 'TE' | 'TM'
 
 /**
- * A thin conductive film on a layer's surface — the metallic Low-E coating on
+ * A thin conductive film on a layer's surface: the metallic Low-E coating on
  * modern insulating glazing, or a foil-faced insulation board.
  *
  * The film is far thinner than a skin depth is long at Wi-Fi frequencies, so it
@@ -102,7 +102,7 @@ type Matrix2 = [Complex, Complex, Complex, Complex] // row-major m11, m12, m21, 
  *
  * cos(delta) and sin(delta) grow like exp(|Im delta|)/2, so a strongly
  * conducting or simply thick layer overflows to Infinity and poisons the whole
- * matrix with NaN — 5 mm of metal at 5.5 GHz already gives |Im delta| ~ 2300.
+ * matrix with NaN: 5 mm of metal at 5.5 GHz already gives |Im delta| ~ 2300.
  * exp(40) corresponds to about 347 dB of one-way attenuation, far beyond any
  * physically meaningful opacity, so clamping there changes no usable result
  * while keeping the arithmetic finite.

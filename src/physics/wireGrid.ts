@@ -71,7 +71,7 @@ export function evaluateWireGrid(grid: WireGrid, freqHz: number): WireGridResult
   let note = ''
   if (a >= g / 2) {
     validity = 'out-of-range'
-    note = 'Wire radius is not small compared with the pitch — the grid is effectively a solid sheet.'
+    note = 'Wire radius is not small compared with the pitch. The grid is effectively a solid sheet.'
   } else if (ratio > 0.5) {
     validity = 'out-of-range'
     note =
@@ -105,10 +105,10 @@ export const REBAR_PRESETS: Array<{
   pitchM: number
   wireRadiusM: number
 }> = [
-  { id: 'q188a', name: 'Q188A — 150 mm pitch, 6.0 mm bar', pitchM: 0.15, wireRadiusM: 0.003 },
-  { id: 'q257a', name: 'Q257A — 150 mm pitch, 7.0 mm bar', pitchM: 0.15, wireRadiusM: 0.0035 },
-  { id: 'q335a', name: 'Q335A — 150 mm pitch, 8.0 mm bar', pitchM: 0.15, wireRadiusM: 0.004 },
-  { id: 'q524a', name: 'Q524A — 150 mm pitch, 10.0 mm bar', pitchM: 0.15, wireRadiusM: 0.005 },
-  { id: 'fine-100', name: 'Fine mesh — 100 mm pitch, 6.0 mm bar', pitchM: 0.1, wireRadiusM: 0.003 },
-  { id: 'fine-50', name: 'Plaster mesh — 50 mm pitch, 1.0 mm wire', pitchM: 0.05, wireRadiusM: 0.0005 },
+  { id: 'q188a', name: 'Q188A: 150 mm pitch, 6.0 mm bar', pitchM: 0.15, wireRadiusM: 0.003 },
+  { id: 'q257a', name: 'Q257A: 150 mm pitch, 7.0 mm bar', pitchM: 0.15, wireRadiusM: 0.0035 },
+  { id: 'q335a', name: 'Q335A: 150 mm pitch, 8.0 mm bar', pitchM: 0.15, wireRadiusM: 0.004 },
+  { id: 'q524a', name: 'Q524A: 150 mm pitch, 10.0 mm bar', pitchM: 0.15, wireRadiusM: 0.005 },
+  { id: 'fine-100', name: 'Fine mesh: 100 mm pitch, 6.0 mm bar', pitchM: 0.1, wireRadiusM: 0.003 },
+  { id: 'fine-50', name: 'Plaster mesh: 50 mm pitch, 1.0 mm wire', pitchM: 0.05, wireRadiusM: 0.0005 },
 ]

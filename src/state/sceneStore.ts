@@ -98,7 +98,7 @@ export function totalThickness(t: WallType): number {
 
 /**
  * Pick the library build-up whose total thickness is closest to the thickness
- * measured off the drawing. Only structural wall types are candidates — glazing,
+ * measured off the drawing. Only structural wall types are candidates. Glazing,
  * door leaves and frames are chosen per opening, not per wall.
  */
 function matchWallType(measuredM: number, types: WallType[]): string {

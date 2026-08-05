@@ -2,7 +2,7 @@
  * Starter build-up library.
  *
  * Every layer here is one of the ITU-R P.2040 Table 3 materials at a nominal
- * construction thickness — no invented dielectric constants. Where a common
+ * construction thickness, with no invented dielectric constants. Where a common
  * building product has no P.2040 entry (PVC window profiles, screed, tile,
  * carpet, mineral wool, Low-E coatings) it is deliberately absent: add it as a
  * custom material with a citation rather than have the tool guess.
@@ -103,7 +103,7 @@ export const DEFAULT_WALL_TYPES: WallType[] = [
     layers: [
       { materialId: 'glass', thicknessM: 0.004 },
       { materialId: 'vacuum', thicknessM: 0.016 },
-      // Coating faces the cavity on the inner pane — the standard position 3.
+      // Coating faces the cavity on the inner pane, which is the standard position 3.
       { materialId: 'glass', thicknessM: 0.004, coating: { sheetResistanceOhmPerSq: 5 } },
     ],
   },

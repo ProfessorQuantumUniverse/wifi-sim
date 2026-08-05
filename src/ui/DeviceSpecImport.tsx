@@ -57,7 +57,7 @@ export function DeviceSpecImport({
     } catch {
       setStatus({
         kind: 'error',
-        message: 'Clipboard blocked by the browser — select the text below and copy it manually.',
+        message: 'Clipboard blocked by the browser. Select the text below and copy it manually.',
         missing: [],
       })
     }
@@ -111,8 +111,8 @@ export function DeviceSpecImport({
       </div>
 
       <Explainer>
-        Writes a research brief that asks for a source and a confidence rating per value, and — for
-        access points — states the regulatory domain so you get the right regional variant. After
+        Writes a research brief that asks for a source and a confidence rating per value, and, for
+        access points, states the regulatory domain so you get the right regional variant. After
         importing you get an explicit list of what was taken from the reply and what was{' '}
         <b>not</b>, so nothing arrives silently.
       </Explainer>
@@ -168,7 +168,7 @@ export function DeviceSpecImport({
           {status.message}
           {status.missing.length > 0 && (
             <div className="mt-1 text-amber-400">
-              Not sourced, left at the current value — set these yourself:{' '}
+              Not sourced, left at the current value. Set these yourself:{' '}
               {status.missing.join('; ')}.
             </div>
           )}
@@ -196,7 +196,7 @@ export function DeviceSpecImport({
                     : 'power unknown'}
                 {radio.antenna ? ` · ${radio.antenna.kind}` : ''}
                 <span className="block text-slate-500">
-                  {radio.confidence} — {radio.source || 'no source given'}
+                  {radio.confidence}: {radio.source || 'no source given'}
                 </span>
               </button>
 
@@ -220,7 +220,7 @@ export function DeviceSpecImport({
                   </div>
                   {lastApplied.outcome.skipped.length > 0 && (
                     <div className="text-amber-400">
-                      <b>Not in the reply — still your own values, check them:</b>{' '}
+                      <b>Not in the reply, so still your own values. Check them:</b>{' '}
                       {lastApplied.outcome.skipped.join(', ')}.
                     </div>
                   )}

@@ -1,0 +1,78 @@
+name: Material data
+description: Contribute electrical properties for a building material, with a source
+title: 'Material: '
+labels: ['material data', 'help wanted']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **This is the most valuable contribution to this project, and it needs no code.**
+
+        The material library is limited to ITU-R P.2040 Table 3, because that is
+        the only source this project has and it does not invent numbers. That
+        leaves real gaps: PVC window profiles, screed, tile, carpet, mineral
+        wool, rigid insulation, aerated concrete blocks.
+
+        One sourced material improves every result the tool produces for
+        anybody who has it in their building.
+
+  - type: input
+    id: material
+    attributes:
+      label: What is the material
+      description: Be as specific as the data is. "uPVC window profile, 5-chamber" beats "plastic".
+      placeholder: Autoclaved aerated concrete block, 600 kg/m3
+    validations:
+      required: true
+
+  - type: textarea
+    id: values
+    attributes:
+      label: The values
+      description: |
+        Either the relative permittivity and conductivity at stated frequencies,
+        or the P.2040-style power law coefficients a, b, c, d with frequency in
+        GHz. Whatever form your source gives them in is fine.
+      placeholder: |
+        eps_r' = 2.1 at 2.4 GHz and 2.1 at 5.5 GHz
+        sigma  = 0.018 S/m at 2.4 GHz, 0.033 S/m at 5.5 GHz
+
+        or
+
+        a = 2.1, b = 0, c = 0.0075, d = 0.94
+    validations:
+      required: true
+
+  - type: input
+    id: range
+    attributes:
+      label: Frequency range the values are valid over
+      description: This is part of the data. The app refuses to hide an extrapolation, so it needs to know where the source stops.
+      placeholder: 1 to 10 GHz
+    validations:
+      required: true
+
+  - type: textarea
+    id: source
+    attributes:
+      label: The source
+      description: |
+        A paper with authors and year, a standard with its clause, a
+        manufacturer's data sheet with a link, or your own measurement.
+        If you measured it yourself, describe the method and the setup.
+      placeholder: |
+        Smith and Jones, "Dielectric properties of lightweight concrete at
+        microwave frequencies", IEEE Trans. AP 68(4), 2020, Table 2.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else worth knowing
+      description: |
+        Moisture dependence, variation between products, whether the figure is
+        typical or worst case, and anything that would make somebody using it
+        misread the result.
+    validations:
+      required: false

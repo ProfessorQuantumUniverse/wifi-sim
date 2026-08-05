@@ -116,7 +116,7 @@ export function SimulatePanel({
           step={0.05}
           unit="m"
           onChange={s.setEvaluationHeight}
-          help="Height above the floor the map is computed at — 1.1 m desk, 1.5 m held phone, 0.1 m robot vacuum."
+          help="Height above the floor the map is computed at: 1.1 m desk, 1.5 m held phone, 0.1 m robot vacuum."
         />
       </Section>
 
@@ -177,7 +177,7 @@ export function SimulatePanel({
       </Section>
 
       {selected && power && (
-        <Section title={`${selected.name} — radio`}>
+        <Section title={`${selected.name}, radio`}>
           <DeviceSpecImport
             kind="ap"
             domain={s.domain}
@@ -195,10 +195,10 @@ export function SimulatePanel({
             label="Wi-Fi generation"
             value={selected.generation}
             options={[
-              { value: 'ht' as Generation, label: 'Wi-Fi 4 — 802.11n (HT)' },
-              { value: 'vht' as Generation, label: 'Wi-Fi 5 — 802.11ac (VHT)' },
-              { value: 'he' as Generation, label: 'Wi-Fi 6/6E — 802.11ax (HE)' },
-              { value: 'eht' as Generation, label: 'Wi-Fi 7 — 802.11be (EHT)' },
+              { value: 'ht' as Generation, label: 'Wi-Fi 4: 802.11n (HT)' },
+              { value: 'vht' as Generation, label: 'Wi-Fi 5: 802.11ac (VHT)' },
+              { value: 'he' as Generation, label: 'Wi-Fi 6/6E: 802.11ax (HE)' },
+              { value: 'eht' as Generation, label: 'Wi-Fi 7: 802.11be (EHT)' },
             ]}
             onChange={(v) => s.updateAp(selected.id, { generation: v })}
             help={`Caps the modulation at MCS ${maxMcsFor(selected.generation)}.`}
@@ -224,7 +224,7 @@ export function SimulatePanel({
             value={String(selected.channel)}
             options={channelsFor(selected.band).map((c) => ({
               value: String(c),
-              label: `${c} — ${channelCentreMHz(selected.band, c)} MHz`,
+              label: `${c}: ${channelCentreMHz(selected.band, c)} MHz`,
             }))}
             onChange={(v) => s.updateAp(selected.id, { channel: Number(v) })}
           />
@@ -339,7 +339,7 @@ export function SimulatePanel({
               {Math.pow(10, power.eirpDbm / 10).toFixed(0)} mW) ={' '}
               {power.effectiveConductedDbm.toFixed(1)} dBm + {power.gainDbi.toFixed(1)} dBi.{' '}
               {power.compliance.limit
-                ? `Limit ${power.compliance.maxEirpDbm.toFixed(1)} dBm — ${power.compliance.limit.citation}.`
+                ? `Limit ${power.compliance.maxEirpDbm.toFixed(1)} dBm: ${power.compliance.limit.citation}.`
                 : ''}
               {!power.compliance.compliant &&
                 ` Exceeds by ${power.compliance.exceedanceDb.toFixed(1)} dB.`}
@@ -348,7 +348,7 @@ export function SimulatePanel({
             {selected.enclosureLossDb > 0 && (
               <div>
                 Radiating {power.radiatedConductedDbm.toFixed(1)} dBm after{' '}
-                {selected.enclosureLossDb.toFixed(1)} dB of enclosure loss — the limit applies at the
+                {selected.enclosureLossDb.toFixed(1)} dB of enclosure loss. The limit applies at the
                 antenna, the enclosure comes after it.
               </div>
             )}
@@ -377,7 +377,7 @@ export function SimulatePanel({
 
       <Section title="Client device" subtitle="What you are measuring coverage for">
         <Explainer>
-          Coverage is not a property of the router alone — a 2-chain phone held in your hand sees a
+          Coverage is not a property of the router alone. A 2-chain phone held in your hand sees a
           very different map from a 3-chain laptop on a desk. These four numbers are what actually
           change the answer.
         </Explainer>
@@ -420,7 +420,7 @@ export function SimulatePanel({
             step={0.5}
             unit="dB"
             onChange={(v) => s.patchClient({ implementationMarginDb: v })}
-            help="5 dB reproduces the IEEE minimum-sensitivity requirement. Lower it (0–2 dB) for modern silicon, which typically beats the mandated minimum."
+            help="How many dB better than a just-compliant receiver this chipset is. 0 dB is a device that only meets the IEEE minimum sensitivity; 5 dB gives back the whole implementation allowance the standard builds into that figure. Raising it lowers the SNR every rate needs."
           />
         </div>
         <p className="rounded bg-slate-800 px-2 py-1.5 text-[10px] text-slate-400">
@@ -462,9 +462,9 @@ export function SimulatePanel({
           label="Reflection order"
           value={String(s.trace.maxReflectionOrder)}
           options={[
-            { value: '0', label: '0 — direct paths only' },
-            { value: '1', label: '1 — single reflections' },
-            { value: '2', label: '2 — double reflections (recommended)' },
+            { value: '0', label: '0, direct paths only' },
+            { value: '1', label: '1, single reflections' },
+            { value: '2', label: '2, double reflections (recommended)' },
           ]}
           onChange={(v) =>
             s.patchTrace({ maxReflectionOrder: Number(v) as 0 | 1 | 2 })
@@ -493,7 +493,7 @@ export function SimulatePanel({
           step={5}
           unit="dB"
           onChange={(v) => s.patchTrace({ dynamicRangeDb: v })}
-          help="Paths weaker than this below the strongest one are discarded — they cannot move the sum."
+          help="Paths weaker than this below the strongest one are discarded: they cannot move the sum."
         />
         <NumberField
           label="Max wall transmissions"
@@ -615,7 +615,7 @@ function AntennaEditor({
       <p className="text-[10px] text-slate-500">
         Peak gain <span className="font-mono text-slate-300">{peakGainDbi(spec).toFixed(2)} dBi</span>
         {(spec.kind === 'dipole' || spec.kind === 'collinear') &&
-          ' — follows from the pattern itself, not a free setting.'}
+          '. It follows from the pattern itself, not a free setting.'}
       </p>
     </div>
   )
@@ -688,7 +688,7 @@ function OrientationEditor({
           {isOmni ? (
             <>
               The yellow bar is the <b>antenna rod</b>. It radiates in a ring{' '}
-              <b>sideways</b> from itself and almost nothing off its ends — so an upright whip
+              <b>sideways</b> from itself and almost nothing off its ends, so an upright whip
               (90°) covers the floor well and the ceiling badly. Lay it flat and you lose the room
               but gain the storey above.
             </>
@@ -702,7 +702,7 @@ function OrientationEditor({
       </div>
 
       <Slider
-        label={isOmni ? 'Rod direction — rotation on the plan' : 'Beam direction on the plan'}
+        label={isOmni ? 'Rod direction, rotation on the plan' : 'Beam direction on the plan'}
         value={Math.round(azimuthDeg)}
         min={-180}
         max={180}
@@ -710,12 +710,12 @@ function OrientationEditor({
         onChange={(v) => onReorient(v, tiltDeg)}
         help={
           isOmni
-            ? 'Only matters once the rod is tilted away from upright — a vertical whip is the same in every direction. 0° = towards the right edge of the plan, 90° = downward on screen.'
+            ? 'Only matters once the rod is tilted away from upright. A vertical whip is the same in every direction. 0° = towards the right edge of the plan, 90° = downward on screen.'
             : '0° = towards the right edge of the plan, 90° = downward on screen. The yellow arrow on the map shows it.'
         }
       />
       <Slider
-        label={isOmni ? 'Rod tilt — 90° is upright' : 'Beam tilt — 0° is horizontal'}
+        label={isOmni ? 'Rod tilt: 90° is upright' : 'Beam tilt: 0° is horizontal'}
         value={Math.round(tiltDeg)}
         min={-90}
         max={90}
@@ -723,7 +723,7 @@ function OrientationEditor({
         onChange={(v) => onReorient(azimuthDeg, v)}
         help={
           isOmni
-            ? '90° upright (normal router on a shelf), −90° hanging down (ceiling mount), 0° lying flat. Tilting also rotates the polarisation, which costs signal to a differently-oriented client — the engine accounts for that.'
+            ? '90° upright (normal router on a shelf), −90° hanging down (ceiling mount), 0° lying flat. Tilting also rotates the polarisation, which costs signal to a differently-oriented client. The engine accounts for that.'
             : '0° straight out, negative points downward.'
         }
       />

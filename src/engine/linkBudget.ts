@@ -130,7 +130,7 @@ export function noiseFloorDbm(widthMHz: number, noiseFigureDb: number): number {
  * The standard's sensitivity is specified against a reference receiver with
  * `referenceNoiseFigureDb` noise figure and `implementationMarginDb` margin, so
  * subtracting that reference noise floor recovers a bandwidth-independent
- * required SNR — sensitivity and noise both scale with bandwidth.
+ * required SNR: sensitivity and noise both scale with bandwidth.
  */
 export function requiredSnrDb(
   mcs: number,
@@ -404,7 +404,7 @@ export function checkCompliance(
       compliant: false,
       exceedanceDb: 0,
       messages: [
-        `No ${domain.toUpperCase()} allocation covers ${centreFreqMHz} MHz — this channel is not usable in that domain.`,
+        `No ${domain.toUpperCase()} allocation covers ${centreFreqMHz} MHz. This channel is not usable in that domain.`,
       ],
     }
   }
@@ -468,7 +468,7 @@ export function channelsFor(band: Band): number[] {
 /**
  * Fraction of an interferer's transmitted power that lands inside a victim
  * channel. Both occupancies are treated as rectangular, and the overlap is
- * normalised by the interferer's own width — the standard first-order
+ * normalised by the interferer's own width, which is the standard first-order
  * adjacent-channel model. Two 20 MHz channels three apart on 2.4 GHz overlap
  * partially; channel 1 against channel 11 does not overlap at all.
  */

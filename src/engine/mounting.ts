@@ -4,7 +4,7 @@
  * Two things follow from this. First, the antenna's natural orientation: a whip
  * on a shelf stands upright, the same router screwed to a ceiling hangs upside
  * down, and a wall-mounted panel points into the room. Second, the enclosure it
- * radiates through — a router inside a closed cabinet is behind a door, and that
+ * radiates through: a router inside a closed cabinet is behind a door, and that
  * door is a real, measurable loss that no amount of repositioning recovers.
  *
  * The enclosure loss is NOT a fudge factor for "somewhere awkward": it is the
@@ -43,12 +43,12 @@ export interface MountingPreset {
 export const MOUNTING_PRESETS: MountingPreset[] = [
   {
     id: 'free-standing',
-    name: 'Free standing — table or desk',
+    name: 'Free standing, table or desk',
     heightM: 0.75,
     tiltDeg: 90,
     enclosureLossDb: 0,
     enclosureBasis: 'nothing in front of the antenna',
-    hint: 'Open air on all sides. Low, so the floor is close — expect a strong floor reflection.',
+    hint: 'Open air on all sides. Low, so the floor is close and the floor reflection will be strong.',
   },
   {
     id: 'shelf-top',
@@ -66,7 +66,7 @@ export const MOUNTING_PRESETS: MountingPreset[] = [
     tiltDeg: 90,
     enclosureLossDb: 2.4,
     enclosureBasis: '18 mm chipboard door, ITU-R P.2040 chipboard at 5.5 GHz',
-    hint: 'The door costs a couple of dB in every direction — worse than it sounds, because it applies before any wall loss.',
+    hint: 'The door costs a couple of dB in every direction. That is worse than it sounds, because it applies before any wall loss.',
   },
   {
     id: 'inside-cabinet-glass',
@@ -84,7 +84,7 @@ export const MOUNTING_PRESETS: MountingPreset[] = [
     tiltDeg: 90,
     enclosureLossDb: 25,
     enclosureBasis: 'sheet metal enclosure; escape is through seams and openings, not through the metal',
-    hint: 'Do not do this with internal antennas. The figure is a placeholder for leakage through gaps — the real value depends entirely on the openings.',
+    hint: 'Do not do this with internal antennas. The figure is a placeholder for leakage through gaps. The real value depends entirely on the openings.',
   },
   {
     id: 'wall-mounted',
@@ -93,7 +93,7 @@ export const MOUNTING_PRESETS: MountingPreset[] = [
     tiltDeg: 90,
     enclosureLossDb: 0,
     enclosureBasis: 'nothing in front of the antenna',
-    hint: 'The wall behind it blocks one half-space, which the ray tracer already accounts for — place it on the wall of the room you want covered.',
+    hint: 'The wall behind it blocks one half-space, which the ray tracer already accounts for. Put it on the wall of the room you want covered.',
   },
   {
     id: 'ceiling-mounted',
@@ -111,7 +111,7 @@ export const MOUNTING_PRESETS: MountingPreset[] = [
     tiltDeg: 90,
     enclosureLossDb: 6,
     enclosureBasis: 'screen back panel with internal metal shielding, one-way estimate',
-    hint: 'A screen is a metal-backed panel. Coverage on the far side of it will be poor — verify with a probe point.',
+    hint: 'A screen is a metal-backed panel. Coverage on the far side of it will be poor. Verify with a probe point.',
   },
 ]
 

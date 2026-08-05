@@ -1,0 +1,71 @@
+name: Bug
+description: Something behaves incorrectly
+title: 'Bug: '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        If the problem is that the wall tracing will not find your walls, use the
+        tracing template instead. If the problem is that a computed result looks
+        wrong, use the physics template.
+
+  - type: textarea
+    id: what-happens
+    attributes:
+      label: What happens
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected instead
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to reproduce it
+      description: |
+        Attaching the `.wifisim` file is the fastest possible way to get this
+        fixed, because it contains everything needed to reproduce exactly what
+        you are seeing.
+      placeholder: |
+        1. Open the attached project
+        2. Select the AP and set the channel to 100
+        3. Press Compute coverage
+        4. The map is empty
+    validations:
+      required: true
+
+  - type: dropdown
+    id: how
+    attributes:
+      label: How are you running it
+      options:
+        - The hosted version on GitHub Pages
+        - npx wifi-sim
+        - Docker
+        - My own web server
+        - From source with npm run dev
+    validations:
+      required: true
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and version
+      placeholder: Firefox 128 on Windows 11
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Anything in the browser console
+      description: Open the developer tools, reload, reproduce, and paste anything red.
+      render: text
+    validations:
+      required: false

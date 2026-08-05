@@ -4,7 +4,7 @@
  * Each pattern returns a directivity and the unit polarisation vector of the
  * radiated E-field for a given direction. Carrying the polarisation vector (not
  * just a scalar gain) is what lets the engine compute the real mismatch loss
- * between, say, a vertically mounted router antenna and a phone held flat —
+ * between, say, a vertically mounted router antenna and a phone held flat,
  * instead of silently assuming they are aligned.
  *
  * Closed forms used:
@@ -179,8 +179,14 @@ export function evaluateAntenna(spec: AntennaSpec, dir: Vec3): AntennaResponse {
     const side = vDot(dir, reference)
     const upAxis = vCross(boresight, reference)
     const vert = vDot(dir, upAxis)
-    const thetaDeg = (Math.atan2(vert, Math.max(1e-9, forward)) * 180) / Math.PI
-    const phiDeg = (Math.atan2(side, Math.max(1e-9, forward)) * 180) / Math.PI
+    // atan2 is used with the signed forward component so that directions
+    // behind the antenna come out near 180 degrees and are floored at the
+    // front-to-back ratio. Clamping `forward` to a small positive number
+    // instead would make a ray arriving exactly along the reverse axis report
+    // zero degrees off boresight, so the antenna would radiate its full peak
+    // gain straight backwards through its own reflector.
+    const thetaDeg = (Math.atan2(vert, forward) * 180) / Math.PI
+    const phiDeg = (Math.atan2(side, forward) * 180) / Math.PI
 
     const peak = spec.peakGainDbi ?? 8
     const db = peak + sectorPatternDb(spec, thetaDeg, phiDeg)

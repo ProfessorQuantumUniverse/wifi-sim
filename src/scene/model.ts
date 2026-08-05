@@ -170,7 +170,7 @@ interface WallPanel {
  * Split a wall face into panels: the solid remainder plus, for each opening, its
  * frame ring, its mullions, and the infill panes between them.
  *
- * The solid part is produced by a guillotine subdivision — cut the face into
+ * The solid part is produced by a guillotine subdivision: cut the face into
  * horizontal bands at every opening's sill and head, then within each band cut
  * vertically at every opening's edges, and keep the cells no opening covers.
  * That yields a small, non-overlapping set of rectangles for any arrangement of

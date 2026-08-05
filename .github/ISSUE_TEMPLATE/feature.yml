@@ -1,0 +1,32 @@
+name: Feature request
+description: Suggest something the tool should be able to do
+title: 'Feature: '
+labels: ['enhancement']
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do
+      description: |
+        Describe the situation rather than the solution. It is often possible
+        already, and where it is not, knowing the real problem usually produces
+        a better answer than the one that was asked for.
+      placeholder: |
+        I am planning a two-storey house and I want to know whether one router
+        on the ground floor covers the bedrooms upstairs.
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What you had in mind
+    validations:
+      required: false
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: What you are doing instead at the moment
+    validations:
+      required: false

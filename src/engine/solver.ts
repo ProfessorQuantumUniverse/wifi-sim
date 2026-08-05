@@ -59,7 +59,7 @@ export interface AccessPointConfig {
   /** Feeder/connector loss between radio and antenna, dB. */
   cableLossDb: number
   antenna: AntennaSpec
-  /** How it is installed — sets the height, the antenna tilt and the enclosure. */
+  /** How it is installed. Sets the height, the antenna tilt and the enclosure. */
   mounting: MountingKind
   /**
    * Loss of whatever sits immediately in front of the antenna (a cabinet door,
@@ -202,7 +202,7 @@ export function buildTraceScene(
 export function accessPointPower(ap: AccessPointConfig, domain: RegulatoryDomain) {
   const gain = peakGainDbi(ap.antenna)
   // The enclosure sits outside the antenna, so it reduces what actually gets
-  // radiated — but it is not part of the EIRP a regulator measures at the
+  // radiated. It is not part of the EIRP a regulator measures at the
   // antenna, so compliance is checked before it and propagation after it.
   const effectiveConducted = ap.conductedPowerDbm - ap.cableLossDb
   const eirpDbm = effectiveConducted + gain

@@ -22,14 +22,14 @@ export type Provenance =
 export function provenanceLabel(p: Provenance): string {
   switch (p.kind) {
     case 'standard':
-      return `Standard — ${p.citation}`
+      return `Standard: ${p.citation}`
     case 'literature':
-      return `Literature — ${p.citation}`
+      return `Literature: ${p.citation}`
     case 'derived':
       return `Derived from ${p.from}`
     case 'user':
-      return p.note ? `User input — ${p.note}` : 'User input'
+      return p.note ? `User input: ${p.note}` : 'User input'
     case 'measured':
-      return p.note ? `Measured — ${p.note}` : 'Measured'
+      return p.note ? `Measured: ${p.note}` : 'Measured'
   }
 }

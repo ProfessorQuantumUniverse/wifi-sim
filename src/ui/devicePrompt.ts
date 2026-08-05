@@ -5,7 +5,7 @@
  * The brief asks for a source and a confidence rating per figure, and states
  * which regulatory domain the device is being modelled in so the right regional
  * variant gets looked up. It deliberately does NOT insist that everything
- * unpublished comes back as null — that produced replies that were almost
+ * unpublished comes back as null. That produced replies that were almost
  * entirely null and therefore useless. A well-established figure for the device
  * class, labelled as such, is far more informative.
  *
@@ -37,8 +37,8 @@ Research it and return ONE JSON object, nothing else, in this shape:
       "generation": "ht" | "vht" | "he" | "eht",
       "maxChannelWidthMHz": 20 | 40 | 80 | 160 | 320,
       "spatialStreams": <integer, transmit chains on this band>,
-      "conductedPowerDbm": <power at the antenna connector, dBm — this EXCLUDES antenna gain>,
-      "eirpDbm": <total radiated power, dBm — this INCLUDES antenna gain>,
+      "conductedPowerDbm": <power at the antenna connector, dBm, this EXCLUDES antenna gain>,
+      "eirpDbm": <total radiated power, dBm, this INCLUDES antenna gain>,
       "antennaGainDbi": <peak gain of one antenna, dBi>,
       "antenna": {
         "kind": "dipole" | "collinear" | "sector" | "isotropic",
@@ -57,24 +57,24 @@ Research it and return ONE JSON object, nothing else, in this shape:
 
 How to handle each field:
 
-TRANSMIT POWER — this is the field people get wrong most often, so please be careful:
+TRANSMIT POWER, this is the field people get wrong most often, so please be careful:
 - "conductedPowerDbm" and "eirpDbm" differ by the antenna gain: eirp = conducted + antennaGainDbi.
 - Fill in whichever you actually found, and set the other to null. Do NOT put the same number in both, and do not put an EIRP figure in the conducted field.
-- Most consumer routers only publish EIRP, and often only in a regulatory filing. That is fine — fill "eirpDbm" and leave "conductedPowerDbm" null.
+- Most consumer routers only publish EIRP, and often only in a regulatory filing. That is fine, fill "eirpDbm" and leave "conductedPowerDbm" null.
 - ${
     domain === 'etsi'
-      ? 'In the EU the legal ceiling is 20 dBm EIRP on 2.4 GHz, 23 dBm EIRP on 5.15-5.35 GHz and on 6 GHz indoor, and 30 dBm EIRP on 5.47-5.725 GHz. A device sold in the EU cannot exceed these, so if your figure is above the ceiling for that band you have almost certainly found a US figure or a conducted/EIRP mix-up — say so in "notes".'
+      ? 'In the EU the legal ceiling is 20 dBm EIRP on 2.4 GHz, 23 dBm EIRP on 5.15-5.35 GHz and on 6 GHz indoor, and 30 dBm EIRP on 5.47-5.725 GHz. A device sold in the EU cannot exceed these, so if your figure is above the ceiling for that band you have almost certainly found a US figure or a conducted/EIRP mix-up, say so in "notes".'
       : 'In the US the ceiling is 36 dBm EIRP on 2.4 GHz and 30 dBm EIRP on most 5 GHz sub-bands.'
   }
 
-ANTENNA KIND — pick the closest of the four, and put the real description in "description":
-- "dipole" — a single whip, a PIFA, or any simple internal element. This is the right answer for most home routers.
-- "collinear" — a taller external antenna that stacks several elements to squeeze the pattern towards the horizon (typical of "high gain" 5-9 dBi whips). Set "elements".
-- "sector" — a genuinely directional panel or patch. Set the beamwidths.
-- "isotropic" — only if you truly have no information.
+ANTENNA KIND, pick the closest of the four, and put the real description in "description":
+- "dipole", a single whip, a PIFA, or any simple internal element. This is the right answer for most home routers.
+- "collinear", a taller external antenna that stacks several elements to squeeze the pattern towards the horizon (typical of "high gain" 5-9 dBi whips). Set "elements".
+- "sector", a genuinely directional panel or patch. Set the beamwidths.
+- "isotropic", only if you truly have no information.
 
 EVERYTHING ELSE:
-- Give your best sourced answer. If a number is not published but is well established for this class of device, use it and set "confidence": "typical-for-class" — say in "source" what you based it on. That is far more useful to me than null.
+- Give your best sourced answer. If a number is not published but is well established for this class of device, use it and set "confidence": "typical-for-class", say in "source" what you based it on. That is far more useful to me than null.
 - Use null only when you genuinely have nothing to go on, not merely when the manufacturer does not publish it.
 - One entry in "radios" per band the device supports.
 - Prefer the ${domain === 'etsi' ? 'EU' : 'US'} variant, and note it if you used another region's data.
@@ -105,7 +105,7 @@ Please research it and return ONE JSON object, nothing else, in exactly this sha
 
 Rules that matter to me:
 - Use null for anything you cannot source. Do not substitute a typical value.
-- Phone and laptop makers rarely publish this. Identifying the Wi-Fi chipset (from a teardown or a regulatory filing) and quoting ITS datasheet is usually the best available route — if you do that, say so in "source" and use confidence "chipset-datasheet".
+- Phone and laptop makers rarely publish this. Identifying the Wi-Fi chipset (from a teardown or a regulatory filing) and quoting ITS datasheet is usually the best available route, if you do that, say so in "source" and use confidence "chipset-datasheet".
 - Body loss is device-dependent (a phone held to the head, a laptop on a desk). Say which posture your number assumes in "notes".`
 }
 
@@ -115,7 +115,7 @@ Rules that matter to me:
 
 /**
  * Assistants rarely use the exact four keywords, so map what they do say.
- * Anything unmatched is reported rather than silently coerced — an unrecognised
+ * Anything unmatched is reported rather than silently coerced: an unrecognised
  * kind quietly becoming "dipole" is why a collinear antenna could look as
  * though it had been ignored.
  *
@@ -278,7 +278,7 @@ export function parseAccessPointJson(
       }
       if (kindInfo?.kind === 'collinear' && asNumber(antennaRaw?.elements) === null) {
         warnings.push(
-          'Collinear antenna with no element count given — assuming 2 elements. Adjust it if you know better.',
+          'Collinear antenna with no element count given, so assuming 2 elements. Adjust it if you know better.',
         )
       }
 
@@ -324,7 +324,7 @@ export function parseAccessPointJson(
  * Turn one imported radio into an AP patch.
  *
  * Where only EIRP is known, the conducted power is derived as EIRP minus the
- * antenna gain — an identity, not an assumption, provided both figures describe
+ * antenna gain. That is an identity, not an assumption, provided both figures describe
  * the same radio. Nulls are simply left out so the existing value stays and the
  * UI can flag it.
  */
@@ -340,7 +340,7 @@ export interface ApplyOutcome {
  * Turn one imported radio into an AP patch, and say exactly which fields moved.
  *
  * Where only EIRP is known, the conducted power is derived as EIRP minus the
- * antenna gain — an identity, not an assumption. Fields the reply did not carry
+ * antenna gain. That is an identity, not an assumption. Fields the reply did not carry
  * are simply left out so the existing value stands, and they are listed in
  * `skipped` so the UI can name them.
  */
@@ -388,7 +388,7 @@ export function radioToApPatch(radio: ImportedRadio): ApplyOutcome {
     applied.push(`antenna type (${radio.antenna.kind})`)
 
     if (radio.antenna.kind === 'collinear') {
-      // Always set the element count — leaving it undefined silently fell back
+      // Always set the element count. Leaving it undefined silently fell back
       // to 2 and made the import look like it had been ignored.
       spec.elements = radio.antenna.elements !== null ? Math.round(radio.antenna.elements) : 2
       spec.spacingLambda = 0.8
@@ -420,7 +420,7 @@ export function radioToApPatch(radio: ImportedRadio): ApplyOutcome {
       // the element count, it is not a free parameter. A quoted gain that
       // disagrees is worth surfacing rather than silently discarding.
       notes.push(
-        `Reported antenna gain ${gain} dBi is not applied directly — for a ${radio.antenna.kind} the gain follows from the pattern itself. The panel shows the resulting figure; if it disagrees with ${gain} dBi, adjust the element count.`,
+        `Reported antenna gain ${gain} dBi is not applied directly: for a ${radio.antenna.kind} the gain follows from the pattern itself. The panel shows the resulting figure; if it disagrees with ${gain} dBi, adjust the element count.`,
       )
     }
     patch.antenna = spec

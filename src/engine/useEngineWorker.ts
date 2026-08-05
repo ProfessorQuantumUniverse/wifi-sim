@@ -205,7 +205,7 @@ export function useEngineWorker() {
     const heatmap = sim.heatmap
     const serving = sim.aps.find((a) => a.id === sim.selectedApId) ?? sim.aps.find((a) => a.enabled)
     if (!heatmap || !serving) {
-      sim.setError('Compute coverage first — the channel plan scores the map that produced it.')
+      sim.setError('Compute coverage first. The channel plan scores the map that produced it.')
       return
     }
 
@@ -235,7 +235,7 @@ export function useEngineWorker() {
     const { scene, customMaterials } = useSceneStore.getState()
     const template = sim.aps.find((a) => a.id === sim.selectedApId) ?? sim.aps[0]
     if (!template) {
-      sim.setError('Add one AP first — the optimiser uses its radio settings as the template.')
+      sim.setError('Add one AP first. The optimiser uses its radio settings as the template.')
       return
     }
     const spec = defaultGridFor(scene, sim.optimiser.evaluationSpacingM, sim.evaluationHeightM)

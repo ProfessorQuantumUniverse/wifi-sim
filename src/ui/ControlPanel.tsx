@@ -194,7 +194,7 @@ export function ControlPanel({ onTrace }: { onTrace: () => void }) {
           max={60}
           unit="px"
           onChange={(v) => patch({ maxThicknessRadius: v })}
-          help="0 = off. Removes strokes thicker than twice this — filled-in areas, solid symbols. Can punch holes at wall junctions, so raise the gap bridging alongside it."
+          help="0 = off. Removes strokes thicker than twice this: filled-in areas and solid symbols. Can punch holes at wall junctions, so raise the gap bridging alongside it."
         />
         <Slider
           label="Min component area"
@@ -208,10 +208,10 @@ export function ControlPanel({ onTrace }: { onTrace: () => void }) {
         />
       </Section>
 
-      <Section title="Vectorisation" subtitle="Step 2 — centrelines → wall segments">
+      <Section title="Vectorisation" subtitle="Step 2, centrelines → wall segments">
         <Explainer>
           The sliders above only produce the red mask. Nothing becomes a wall until you press{' '}
-          <b>Trace walls</b> at the bottom of this section — and it needs pressing again after any
+          <b>Trace walls</b> at the bottom of this section, and it needs pressing again after any
           slider change (the header says “walls outdated” when that happens).
         </Explainer>
         <Slider
@@ -231,7 +231,7 @@ export function ControlPanel({ onTrace }: { onTrace: () => void }) {
           max={80}
           unit="px"
           onChange={(v) => patchVec({ spurLengthPx: v })}
-          help="Deletes dead-end branches shorter than this — the stubs thinning leaves at wall ends."
+          help="Deletes dead-end branches shorter than this: the stubs thinning leaves at wall ends."
         />
         <Slider
           label="Vertex welding"
@@ -273,7 +273,7 @@ export function ControlPanel({ onTrace }: { onTrace: () => void }) {
         </Button>
       </Section>
 
-      <Section title="Scale" subtitle="Step 3 — required before the model can be built">
+      <Section title="Scale" subtitle="Step 3, required before the model can be built">
         <Explainer>
           Pick a dimension already printed on your plan (this scan has plenty, e.g. “2.86”) or a wall
           you have measured. Click <b>Pick two points</b>, click each end of it on the drawing, then
@@ -326,14 +326,14 @@ export function ControlPanel({ onTrace }: { onTrace: () => void }) {
                         0,
                       )
                       .toFixed(1)} m`
-                  : '— (uncalibrated)'
+                  : 'not calibrated'
               }
             />
             <Row
               label="Thickness range"
               value={
                 walls.length === 0
-                  ? '—'
+                  ? '-'
                   : mpp
                     ? `${(Math.min(...walls.map((w) => w.thicknessPx)) * mpp * 1000).toFixed(0)}–${(
                         Math.max(...walls.map((w) => w.thicknessPx)) * mpp * 1000

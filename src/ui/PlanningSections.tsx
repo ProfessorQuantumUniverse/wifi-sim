@@ -27,7 +27,7 @@ export function NeighbourSection() {
         A neighbour's transmit power is never published, so this does not assume one. Put its router
         roughly where it sits (often just outside a wall), then stand somewhere in your flat, note
         what RSSI your phone reports for that SSID, and enter both. The engine traces that geometry
-        and back-solves the power that reproduces your reading — after which the neighbour's
+        and back-solves the power that reproduces your reading, after which the neighbour's
         interference everywhere else follows the same physics as your own APs.
       </Explainer>
 
@@ -87,7 +87,7 @@ export function NeighbourSection() {
               value={String(selected.channel)}
               options={channelsFor(selected.band).map((c) => ({
                 value: String(c),
-                label: `${c} — ${channelCentreMHz(selected.band, c)} MHz`,
+                label: `${c}: ${channelCentreMHz(selected.band, c)} MHz`,
               }))}
               onChange={(v) => s.updateExternal(selected.id, { channel: Number(v) })}
             />
@@ -170,7 +170,7 @@ export function NeighbourSection() {
               step={0.5}
               unit="dBm"
               onChange={(v) => s.updateExternal(selected.id, { assumedEirpDbm: v })}
-              help="A guess. Set a measurement spot instead — it is far more reliable than assuming a neighbour's power."
+              help="A guess. Set a measurement spot instead. It is far more reliable than assuming a neighbour's power."
             />
           )}
           <Button variant="ghost" onClick={() => s.deleteExternal(selected.id)}>
@@ -192,7 +192,7 @@ export function ChannelPlanSection({ onChannelPlan }: { onChannelPlan: () => voi
     <Section title="Channel plan" defaultOpen={false}>
       <Explainer>
         Ranks every channel in the selected AP's band by the SINR it would give, using the
-        interference already in the computed map. The 5th percentile is the number to look at — it
+        interference already in the computed map. The 5th percentile is the number to look at: it
         is what your worst corner gets. Candidates stay inside one band on purpose: across a band
         the walls behave the same, across bands they do not.
       </Explainer>
@@ -232,7 +232,7 @@ export function ChannelPlanSection({ onChannelPlan }: { onChannelPlan: () => voi
                   <td className="text-right font-mono">{c.p5SinrDb.toFixed(1)}</td>
                   <td className="text-right font-mono">{c.medianSinrDb.toFixed(1)}</td>
                   <td className="truncate">
-                    {c.overlappingSources.length ? c.overlappingSources.join(', ') : '—'}
+                    {c.overlappingSources.length ? c.overlappingSources.join(', ') : '-'}
                   </td>
                 </tr>
               ))}
@@ -256,7 +256,7 @@ export function OptimiserSection({ onOptimise }: { onOptimise: () => void }) {
     <Section title="Placement optimiser" defaultOpen={false}>
       <Explainer>
         Searches the plan for the router position that covers the most floor area at or above your
-        target, scoring every candidate with the same ray-traced physics as the main solve — not a
+        target, scoring every candidate with the same ray-traced physics as the main solve, not a
         distance rule of thumb. It uses the currently selected AP's radio settings as the template.
       </Explainer>
       <NumberField
@@ -329,7 +329,7 @@ export function OptimiserSection({ onOptimise }: { onOptimise: () => void }) {
               }}
               className="w-full rounded border border-emerald-700 bg-emerald-900/40 px-2 py-1 text-left text-[10px] text-emerald-200 hover:bg-emerald-800/50"
             >
-              <b>#{i + 1}</b> at {sug.x.toFixed(2)}, {sug.y.toFixed(2)} m — covers{' '}
+              <b>#{i + 1}</b> at {sug.x.toFixed(2)}, {sug.y.toFixed(2)} m, covers{' '}
               {(sug.coverage * 100).toFixed(0)} % at target, 5th pct {sug.p5RssiDbm.toFixed(1)} dBm
               <span className="block text-emerald-400/70">click to move the selected AP here</span>
             </button>

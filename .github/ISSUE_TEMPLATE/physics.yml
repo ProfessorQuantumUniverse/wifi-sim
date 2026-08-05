@@ -1,0 +1,67 @@
+name: A result looks physically wrong
+description: The numbers disagree with a measurement, a reference, or with physics
+title: 'Physics: '
+labels: ['physics']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        These are the most valuable bug reports this project gets, so please do
+        file one even if you are not sure.
+
+        Two pages worth reading first, because they may already answer it:
+        [what this does not model](https://professorquantumuniverse.github.io/wifi-sim/docs/physics/limits)
+        and
+        [the validation suite](https://professorquantumuniverse.github.io/wifi-sim/docs/reference/validation).
+
+  - type: textarea
+    id: claim
+    attributes:
+      label: What the app says, and what you think it should say
+      description: Numbers please, with units.
+      placeholder: |
+        The app gives 4.1 dB through a 240 mm plastered brick wall at 5.5 GHz.
+        Measured with a vector network analyser on a sample of the same brick I
+        get 7.8 dB at the same frequency and normal incidence.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reference
+    attributes:
+      label: What you are comparing against
+      description: |
+        A measurement, a published figure, another tool, or an analytic result.
+        If it is a measurement, describe the setup: frequency, polarisation,
+        incidence angle, and what was between the two ends.
+    validations:
+      required: true
+
+  - type: textarea
+    id: model
+    attributes:
+      label: The model
+      description: |
+        Attach the `.wifisim` file if you can. Otherwise: the build-up, the
+        geometry, and the trace settings.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Which part of the physics, if you know
+      multiple: true
+      options:
+        - Materials and the ITU-R P.2040 table
+        - Wall and glazing transmission, the transfer matrix
+        - Low-emissivity coatings
+        - Reinforcement mesh
+        - Reflection
+        - Diffraction
+        - Antenna patterns and polarisation
+        - Noise, sensitivity or data rates
+        - Regulatory limits
+        - Not sure
+    validations:
+      required: false

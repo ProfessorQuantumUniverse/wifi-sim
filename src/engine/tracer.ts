@@ -17,7 +17,7 @@
  * essentially all of the second-order energy indoors.
  *
  * Because walls are zero-thickness surfaces carrying a multilayer stack, a
- * transmitted ray continues in a straight line — the stack's transfer matrix
+ * transmitted ray continues in a straight line: the stack's transfer matrix
  * already contains the internal refraction and multiple reflections. That is
  * what makes closed-form image solving valid here even with transmissions.
  */
@@ -50,7 +50,7 @@ import {
 } from './geometry'
 
 // ---------------------------------------------------------------------------
-// Complex 3-vectors — the polarisation state carried along a path
+// Complex 3-vectors, the polarisation state carried along a path
 // ---------------------------------------------------------------------------
 
 interface CVec3 {
@@ -503,8 +503,22 @@ function buildDiffractionPath(
   if (sinBeta0 < 1e-3) return null
 
   // Face-local azimuths, measured from the surface in the plane perpendicular
-  // to the edge. `faceDir` lies in the surface, perpendicular to the edge.
-  const faceDir = vNorm(vCross(facet.normal, edgeAxis))
+  // to the edge. `faceDir` lies in the surface, perpendicular to the edge, and
+  // must point from the edge *into* the face: it is the phi = 0 reference, so
+  // getting its sign wrong swaps the lit and shadow regions and makes the
+  // diffracted field add where it should subtract.
+  //
+  // cross(normal, edgeAxis) has the right axis but a sign that depends on which
+  // way round the wall happened to be drawn, so the direction is taken from the
+  // facet's own centroid instead, which cannot flip.
+  const facetCentre = vScale(
+    vAdd(vAdd(facet.surface.p0, facet.surface.p1), vAdd(facet.surface.p2, facet.surface.p3)),
+    0.25,
+  )
+  const towardsCentre = vSub(facetCentre, qd)
+  const inPlane = vSub(towardsCentre, vScale(edgeAxis, vDot(towardsCentre, edgeAxis)))
+  const faceDir =
+    vLen(inPlane) > 1e-9 ? vScale(inPlane, 1 / vLen(inPlane)) : vNorm(vCross(facet.normal, edgeAxis))
   const azimuth = (d: Vec3) => {
     const perp = vSub(d, vScale(edgeAxis, vDot(d, edgeAxis)))
     const len = vLen(perp)
@@ -659,7 +673,7 @@ export function tracePaths(
 
   if (paths.length === 0) return paths
 
-  // Trim anything far below the dominant path — it cannot move the sum.
+  // Trim anything far below the dominant path: it cannot move the sum.
   const strongest = Math.max(...paths.map((p) => p.gain))
   const floor = strongest * Math.pow(10, -options.dynamicRangeDb / 10)
   return paths.filter((p) => p.gain >= floor).sort((a, b) => b.gain - a.gain)
@@ -672,7 +686,7 @@ export function coherentSum(paths: PropagationPath[]): Complex {
   return acc
 }
 
-/** Incoherent (power) sum — the local-average field a moving client sees. */
+/** Incoherent (power) sum: the local-average field a moving client sees. */
 export function incoherentSum(paths: PropagationPath[]): number {
   let acc = 0
   for (const p of paths) acc += p.gain

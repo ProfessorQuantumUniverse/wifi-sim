@@ -49,7 +49,7 @@ export interface FloorplanParams {
   /** Set for plans drawn light-on-dark (negatives, inverted CAD exports). */
   invertInput: boolean
 
-  /** Disk radius, px. Removes every stroke thinner than 2r — the key control. */
+  /** Disk radius, px. Removes every stroke thinner than 2r. The key control. */
   openRadius: number
   /** Disk radius, px. Bridges gaps in wall strokes (door swings, scan dropouts). */
   closeRadius: number

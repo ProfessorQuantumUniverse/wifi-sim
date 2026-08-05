@@ -11,7 +11,7 @@ export type AutosaveState = 'idle' | 'restoring' | 'ready' | 'saving'
  *
  * Only the inputs are watched. The heatmap is excluded on purpose: it changes
  * wholesale on every solve, is large, and is fully derivable from what is
- * saved — persisting it would make every autosave a multi-megabyte write.
+ * saved. Persisting it would make every autosave a multi-megabyte write.
  */
 export function useAutosave(onImageRestored: (rgba: Uint8ClampedArray, w: number, h: number) => void) {
   const [state, setState] = useState<AutosaveState>('restoring')
@@ -37,7 +37,7 @@ export function useAutosave(onImageRestored: (rgba: Uint8ClampedArray, w: number
           }
         }
       } catch {
-        // A corrupt autosave should not block startup — start clean instead.
+        // A corrupt autosave should not block startup. Start clean instead.
       } finally {
         setState('ready')
       }

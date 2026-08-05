@@ -81,7 +81,7 @@ export function buildReportHtml(input: ReportInput): string {
       (c, i) => `<tr${i === 0 ? ' class="best"' : ''}>
         <td>${c.channel}</td><td>${c.centreMHz} MHz</td>
         <td>${c.p5SinrDb.toFixed(1)} dB</td><td>${c.medianSinrDb.toFixed(1)} dB</td>
-        <td>${c.medianInterferenceDbm < -190 ? '—' : c.medianInterferenceDbm.toFixed(1) + ' dBm'}</td>
+        <td>${c.medianInterferenceDbm < -190 ? '-' : c.medianInterferenceDbm.toFixed(1) + ' dBm'}</td>
         <td>${c.overlappingSources.length ? esc(c.overlappingSources.join(', ')) : 'none'}</td>
       </tr>`,
     )
@@ -135,7 +135,7 @@ grid ${heatmap.spec.resolutionM.toFixed(2)} m (${heatmap.cols}×${heatmap.rows})
 <tr><th>Antenna</th><td>${input.client.antenna.kind}, ${peakGainDbi(input.client.antenna).toFixed(2)} dBi peak</td></tr>
 <tr><th>Noise figure</th><td>${input.client.noiseFigureDb.toFixed(1)} dB → noise floor ${noiseFloorDbm(20, input.client.noiseFigureDb).toFixed(1)} dBm at 20 MHz</td></tr>
 <tr><th>Body loss</th><td>${input.client.bodyLossDb.toFixed(1)} dB</td></tr>
-<tr><th>Chipset margin</th><td>${input.client.implementationMarginDb.toFixed(1)} dB — MCS0 needs ${requiredSnrDb(0, 5, input.client.implementationMarginDb).toFixed(1)} dB SNR, MCS11 needs ${requiredSnrDb(11, 5, input.client.implementationMarginDb).toFixed(1)} dB</td></tr>
+<tr><th>Chipset margin</th><td>${input.client.implementationMarginDb.toFixed(1)} dB: MCS0 needs ${requiredSnrDb(0, 5, input.client.implementationMarginDb).toFixed(1)} dB SNR, MCS11 needs ${requiredSnrDb(11, 5, input.client.implementationMarginDb).toFixed(1)} dB</td></tr>
 </tbody></table></div>
 
 ${
@@ -149,7 +149,7 @@ ${
 
 <h2>Propagation model</h2>
 <ul>
-<li>Deterministic path enumeration solved by the method of images — direct path, specular reflections to order ${input.reflectionOrder}, transmission through every intervening surface${input.diffraction ? ', and single UTD edge diffraction' : ' (edge diffraction disabled)'}.</li>
+<li>Deterministic path enumeration solved by the method of images, direct path, specular reflections to order ${input.reflectionOrder}, transmission through every intervening surface${input.diffraction ? ', and single UTD edge diffraction' : ' (edge diffraction disabled)'}.</li>
 <li>Surface transmission and reflection from the exact multilayer transfer matrix (Abelès), per polarisation and incidence angle.</li>
 <li>Multipath combined ${input.combining === 'coherent' ? 'coherently (instantaneous field, shows standing waves)' : 'incoherently (local average)'}.</li>
 <li>Free-space reference verified to 0.002 dB; two-ray ground reflection verified to 0.06 dB against the analytic result.</li>
@@ -167,10 +167,10 @@ ${usedMaterials
 
 <h2>Standards referenced</h2>
 <ul class="dim">
-<li>ITU-R P.2040 — building material electrical properties (Table 3).</li>
-<li>IEEE Std 802.11-2020 / 802.11ax-2021 — receiver minimum input sensitivity, OFDM numerology, MCS set.</li>
+<li>ITU-R P.2040, building material electrical properties (Table 3).</li>
+<li>IEEE Std 802.11-2020 / 802.11ax-2021, receiver minimum input sensitivity, OFDM numerology, MCS set.</li>
 <li>${input.domain === 'etsi' ? 'ETSI EN 300 328 and EN 301 893; EU Implementing Decision 2021/1067 for 6 GHz.' : 'FCC 47 CFR 15.247 and 15.407.'}</li>
-<li>Kouyoumjian &amp; Pathak (1974) — UTD wedge diffraction; Luebbers (1984) for dielectric faces.</li>
+<li>Kouyoumjian &amp; Pathak (1974): UTD wedge diffraction; Luebbers (1984) for dielectric faces.</li>
 </ul>
 
 <p class="dim">Throughput figures are a single-link model: preamble, interframe spacing, average backoff, A-MPDU aggregation and block ack. They do not represent several clients sharing the channel, OFDMA scheduling or MU-MIMO, so treat them as the ceiling one device can reach on an idle channel.</p>

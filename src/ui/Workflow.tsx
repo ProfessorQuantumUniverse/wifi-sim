@@ -10,7 +10,7 @@ export interface Step {
 /**
  * The five things that have to happen in order, shown at the top of every
  * panel. Each panel passes the same list, so wherever you are you can see what
- * is already satisfied and what the next action is — the tool has enough steps
+ * is already satisfied and what the next action is. The tool has enough steps
  * that "why is this button greyed out" is otherwise a real question.
  */
 export function WorkflowSteps({ steps }: { steps: Step[] }) {

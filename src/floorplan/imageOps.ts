@@ -10,10 +10,10 @@ export interface GrayWeights {
   b: number
 }
 
-/** Rec. ITU-R BT.709-6 luma coefficients — the default grayscale mix. */
+/** Rec. ITU-R BT.709-6 luma coefficients, the default grayscale mix. */
 export const REC709: GrayWeights = { r: 0.2126, g: 0.7152, b: 0.0722 }
 
-/** Rec. ITU-R BT.601-7 luma coefficients — often better on blueprint scans. */
+/** Rec. ITU-R BT.601-7 luma coefficients, often better on blueprint scans. */
 export const REC601: GrayWeights = { r: 0.299, g: 0.587, b: 0.114 }
 
 export function toGray(
@@ -167,7 +167,7 @@ function integralImage(gray: Float32Array, width: number, height: number): Float
 }
 
 /**
- * Binarise. Foreground (1) is the *dark* ink — walls, text, dimension lines —
+ * Binarise. Foreground (1) is the *dark* ink: walls, text, dimension lines,
  * because architectural scans are dark-on-light.
  *
  * `adaptive` uses a local mean over a (2r+1)^2 window minus an offset C, which
@@ -225,7 +225,7 @@ export interface Component {
 }
 
 /**
- * 8-connected component labelling via an explicit stack (no recursion — these
+ * 8-connected component labelling via an explicit stack (no recursion: these
  * images run to several megapixels).
  * Labels are 1-based; 0 means background.
  */

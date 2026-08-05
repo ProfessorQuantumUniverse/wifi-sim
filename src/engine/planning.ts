@@ -5,7 +5,7 @@
  * you place the neighbour roughly where its router sits, stand somewhere with
  * your phone, and type in the RSSI you measured there. The engine traces that
  * geometry and back-solves the transmit power that reproduces your reading.
- * From then on the neighbour is a fully modelled source — its interference in
+ * From then on the neighbour is a fully modelled source: its interference in
  * every other room follows the same physics as your own APs, walls included.
  */
 
@@ -121,7 +121,7 @@ export function calibrateNeighbour(
       conductedDbm: net.assumedEirpDbm - 2.15,
       referenceGainDb: NaN,
       ok: true,
-      message: 'No measurement supplied — using the assumed EIRP.',
+      message: 'No measurement supplied, using the assumed EIRP.',
     }
   }
 
@@ -150,7 +150,7 @@ export function calibrateNeighbour(
       referenceGainDb: NaN,
       ok: false,
       message:
-        'No path reaches the reference point from the neighbour position — move one of them, or fall back to an assumed EIRP.',
+        'No path reaches the reference point from the neighbour position. Move one of them, or fall back to an assumed EIRP.',
     }
   }
 
@@ -175,7 +175,7 @@ export interface ChannelCandidate {
   centreMHz: number
   /** Median SINR over the served area, dB. */
   medianSinrDb: number
-  /** 5th-percentile SINR — what the worst corners get. */
+  /** 5th-percentile SINR: what the worst corners get. */
   p5SinrDb: number
   /** Total interfering power, median over the area, dBm. */
   medianInterferenceDbm: number
@@ -208,7 +208,7 @@ function percentile(sorted: number[], p: number): number {
  * Score every channel in the band against the interference already measured.
  *
  * The serving signal map is held fixed at whatever channel was solved. Within
- * one band that is sound — 5170 and 5330 MHz differ by 3%, far too little to
+ * one band that is sound: 5170 and 5330 MHz differ by 3%, far too little to
  * change how a wall behaves. It is NOT valid across bands, so candidates are
  * restricted to the AP's current band and the UI says so.
  */
@@ -306,7 +306,7 @@ export interface OptimiserResult {
  * next where it best covers what is still missing, and so on. Greedy is not
  * guaranteed optimal, but for the two or three APs a home needs it lands on the
  * same answer as an exhaustive search almost every time, at a small fraction of
- * the cost — and every candidate is scored with the same ray-traced physics as
+ * the cost, and every candidate is scored with the same ray-traced physics as
  * the main solve, not a distance heuristic.
  */
 export function optimisePlacement(
@@ -409,7 +409,7 @@ export function optimisePlacement(
     evaluationCells: evalPoints.length,
     elapsedMs: performance.now() - started,
     note:
-      'Greedy search over the whole plan bounding box. Candidate positions include points outside the walls — check the suggestion is somewhere you can actually put a router.',
+      'Greedy search over the whole plan bounding box. Candidate positions include points outside the walls. Check that the suggestion is somewhere you can actually put a router.',
   }
 }
 

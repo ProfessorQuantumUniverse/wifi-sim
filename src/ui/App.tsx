@@ -272,7 +272,7 @@ export function App() {
                   ),
                 )
               }
-              title="Save the whole project — scan, tracing settings, model, materials, APs — to a file"
+              title="Save the whole project (scan, tracing settings, model, materials, APs) to a file"
               className="rounded border border-slate-700 bg-slate-800 px-2 py-1 text-[11px] text-slate-300 hover:bg-slate-700"
             >
               ⤓ Save
@@ -305,7 +305,7 @@ export function App() {
           )}
           {busy && <span className="text-[11px] text-sky-400">working…</span>}
           {wallsStale && !busy && (
-            <span className="text-[11px] text-amber-400">walls outdated — re-trace</span>
+            <span className="text-[11px] text-amber-400">walls outdated, needs re-tracing</span>
           )}
         </div>
       </header>

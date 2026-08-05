@@ -147,7 +147,7 @@ export function TransmissionChart({
 
       <figure>
         <figcaption className="mb-1 text-[10px] text-slate-500">
-          Loss vs incidence angle at {(freqHz / 1e9).toFixed(2)} GHz —{' '}
+          Loss vs incidence angle at {(freqHz / 1e9).toFixed(2)} GHz:{' '}
           <span className="text-sky-400">TE</span> / <span className="text-rose-400">TM</span>
         </figcaption>
         <svg viewBox={`0 0 ${W} ${H}`} className="w-full rounded bg-slate-950">

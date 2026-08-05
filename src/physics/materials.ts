@@ -94,7 +94,7 @@ export const ITU_MATERIALS: MaterialDefinition[] = [
     fMinGHz: 1,
     fMaxGHz: 10,
     provenance: P2040,
-    notes: 'Characterised only to 10 GHz — 6 GHz Wi-Fi is inside the range, 60 GHz is not.',
+    notes: 'Characterised only to 10 GHz: 6 GHz Wi-Fi is inside the range, 60 GHz is not.',
   },
   {
     id: 'plasterboard',
@@ -184,7 +184,7 @@ export const ITU_MATERIALS: MaterialDefinition[] = [
     fMaxGHz: 100,
     provenance: P2040,
     notes:
-      'Only characterised from 50 GHz upward. At Wi-Fi frequencies this is a large extrapolation — prefer "Wood" or a measured value.',
+      'Only characterised from 50 GHz upward. At Wi-Fi frequencies this is a large extrapolation. Prefer "Wood" or a measured value.',
   },
   {
     id: 'metal',

@@ -14,7 +14,7 @@ export interface ScaleStop {
  */
 export const SCALES: Record<Exclude<HeatmapLayer, 'bestAp'>, ScaleStop[]> = {
   rssi: [
-    { from: -Infinity, colour: [69, 10, 30], label: '< −85 dBm — no usable link' },
+    { from: -Infinity, colour: [69, 10, 30], label: '< −85 dBm, no usable link' },
     { from: -85, colour: [136, 19, 55], label: '−85 … −80' },
     { from: -80, colour: [190, 24, 93], label: '−80 … −75' },
     { from: -75, colour: [217, 70, 39], label: '−75 … −70' },
@@ -22,17 +22,17 @@ export const SCALES: Record<Exclude<HeatmapLayer, 'bestAp'>, ScaleStop[]> = {
     { from: -67, colour: [234, 190, 45], label: '−67 … −60  (reliable data)' },
     { from: -60, colour: [163, 200, 60], label: '−60 … −55' },
     { from: -55, colour: [74, 190, 100], label: '−55 … −45  (very good)' },
-    { from: -45, colour: [16, 160, 140], label: '> −45 dBm — excellent' },
+    { from: -45, colour: [16, 160, 140], label: '> −45 dBm, excellent' },
   ],
   sinr: [
-    { from: -Infinity, colour: [69, 10, 30], label: '< 5 dB — below MCS0' },
+    { from: -Infinity, colour: [69, 10, 30], label: '< 5 dB, below MCS0' },
     { from: 5, colour: [166, 30, 60], label: '5 … 10' },
     { from: 10, colour: [217, 70, 39], label: '10 … 15' },
     { from: 15, colour: [234, 138, 35], label: '15 … 21' },
     { from: 21, colour: [234, 190, 45], label: '21 … 27' },
     { from: 27, colour: [163, 200, 60], label: '27 … 32' },
     { from: 32, colour: [74, 190, 100], label: '32 … 39' },
-    { from: 39, colour: [16, 160, 140], label: '> 39 dB — MCS11 capable' },
+    { from: 39, colour: [16, 160, 140], label: '> 39 dB: MCS11 capable' },
   ],
   mcs: [
     { from: -Infinity, colour: [50, 12, 28], label: 'no link' },

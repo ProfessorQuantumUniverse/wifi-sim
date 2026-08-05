@@ -614,7 +614,7 @@ export function SceneCanvas({ onProbe }: { onProbe?: (x: number, y: number) => v
       />
       {scene.walls.length === 0 && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-sm text-slate-500">
-          No model yet — trace a floorplan and press “Build model”, or draw walls manually.
+          No model yet. Trace a floorplan and press “Build model”, or draw walls manually.
         </div>
       )}
       <div className="absolute bottom-3 left-3 flex gap-2 text-[11px] text-slate-400">

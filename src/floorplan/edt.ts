@@ -53,7 +53,7 @@ function dt1d(
  *
  * Pass `seedValue = 0` to get "distance to background" (the inside-thickness
  * measure of a foreground stroke); pass `1` to get "distance to foreground".
- * Result is in squared pixels — compare against `r * r` to avoid a sqrt.
+ * Result is in squared pixels. Compare against `r * r` to avoid a sqrt.
  */
 export function edtSquared(
   mask: Uint8Array,
