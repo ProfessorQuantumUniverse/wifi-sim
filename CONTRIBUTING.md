@@ -41,6 +41,16 @@ npm run build
 
 Open an issue first for anything beyond a small fix.
 
+### Use npm 11
+
+The lock file is resolved with **npm 11**, and CI pins the same major. npm 10
+and npm 11 disagree about a conflicting optional peer dependency deep in the
+VitePress tree, so a lock file regenerated with npm 10 will fail `npm ci` on
+npm 11 and the other way round.
+
+If you change dependencies, check your version with `npm --version` and upgrade
+with `npm install -g npm@11` before committing a new `package-lock.json`.
+
 ## The rules that are not negotiable
 
 **No invented numbers.** Every physical constant needs a source in the code next

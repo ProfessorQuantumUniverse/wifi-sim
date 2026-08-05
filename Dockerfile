@@ -13,8 +13,11 @@ FROM node:22-alpine AS build
 WORKDIR /app
 
 # Dependencies first, so a source-only change does not reinstall them.
+# The image's bundled npm is a major behind the one the lock file was resolved
+# with, and the two disagree about a conflicting optional peer dependency deep
+# in the VitePress tree, so it is pinned to keep "npm ci" reproducible.
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm install -g npm@11 && npm ci
 
 COPY . .
 RUN npm run build

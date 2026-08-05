@@ -22,6 +22,12 @@ jobs:
           node-version: 22
           cache: npm
 
+      # The runner's bundled npm is a major behind the one the lock file was
+      # resolved with, and the two disagree about a conflicting optional peer
+      # dependency deep in the VitePress tree. Pinning it is what makes
+      # "npm ci" actually reproducible.
+      - run: npm install -g npm@11
+
       - run: npm ci
 
       - name: Type check

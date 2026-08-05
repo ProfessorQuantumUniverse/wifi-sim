@@ -26,6 +26,9 @@ jobs:
           node-version: 22
           cache: npm
 
+      # Kept in step with ci.yml; see the note there.
+      - run: npm install -g npm@11
+
       - run: npm ci
 
       # Nothing gets published that has not passed the validation suite.

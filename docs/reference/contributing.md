@@ -71,6 +71,16 @@ npm run dev
 
 Read [architecture](/reference/architecture) for what lives where.
 
+::: warning Use npm 11
+The lock file is resolved with npm 11, and CI pins the same major. npm 10 and
+npm 11 disagree about a conflicting optional peer dependency deep in the
+VitePress tree, so a lock file regenerated with npm 10 will fail `npm ci` on
+npm 11 and the other way round.
+
+If you change dependencies, check `npm --version` and upgrade with
+`npm install -g npm@11` before committing a new `package-lock.json`.
+:::
+
 ### Before you open a pull request
 
 ```bash
