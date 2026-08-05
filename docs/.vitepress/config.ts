@@ -84,7 +84,7 @@ export default defineConfig({
     footer: {
       message:
         'Released under the GNU General Public License v3.0 or later. Physical constants are cited to their sources, not invented.',
-      copyright: 'Copyright (C) 2025 Lorenzo Bay-Mueller',
+      copyright: 'Copyright (C) 2026 Lorenzo Bay-Mueller',
     },
   },
 })

@@ -11,7 +11,7 @@
  *
  * Run:  node examples/generate-floorplan.mjs
  *
- * Copyright (C) 2025 Lorenzo Bay-Mueller. GPL-3.0-or-later.
+ * Copyright (C) 2026 Lorenzo Bay-Mueller. GPL-3.0-or-later.
  */
 
 import { deflateSync } from 'node:zlib'

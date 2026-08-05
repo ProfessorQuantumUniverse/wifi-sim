@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /*
  * WiFi-Sim launcher.
- * Copyright (C) 2025 Lorenzo Bay-Mueller
+ * Copyright (C) 2026 Lorenzo Bay-Mueller
  *
  * This program is free software: you can redistribute it and/or modify it
  * under the terms of the GNU General Public License as published by the Free
