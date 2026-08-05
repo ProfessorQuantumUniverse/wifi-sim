@@ -175,4 +175,4 @@ was a deliberate choice: the physics engine is the valuable part of this
 project, and it should stay free for everybody rather than become the basis of
 somebody's closed product.
 
-Copyright (C) 2025 Lorenzo Bay-Mueller.
+Copyright (C) 2026 Lorenzo Bay-Mueller.
