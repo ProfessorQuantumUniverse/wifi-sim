@@ -63,29 +63,38 @@ jobs:
     name: Publish to npm
     needs: verify
     runs-on: ubuntu-latest
-    # Needs an NPM_TOKEN secret with publish rights. Without one this job is
-    # skipped rather than failing the release.
+    # Authenticates by OIDC through npm trusted publishing, so there is no
+    # publish token anywhere in this repository. npm has to be told to trust
+    # this workflow first: the package's settings on npmjs.com name the owner,
+    # the repository and this file, and a publish is only accepted when all
+    # three match. Renaming this file therefore breaks publishing until the
+    # trusted publisher is updated to the new name.
     if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
+          # Trusted publishing needs Node >= 22.14 and npm >= 11.5.1.
           node-version: 22
           cache: npm
           registry-url: https://registry.npmjs.org
       # Kept in step with ci.yml; see the note there.
       - run: npm install -g npm@11
       - run: npm ci
+
+      # The tag is the one source of truth for the version. Without this the
+      # publish would keep shipping whatever package.json happens to say, while
+      # the container image gets tagged from the tag, and the two would drift
+      # apart on the very first release that forgets to bump by hand.
+      - name: Take the version from the tag
+        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version --allow-same-version
+
       - run: npm run build
+
+      # No --provenance flag: trusted publishing attaches the attestation by
+      # itself, and passing it alongside OIDC is redundant.
       - name: Publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: |
-          if [ -z "$NODE_AUTH_TOKEN" ]; then
-            echo "No NPM_TOKEN secret is set, skipping the npm publish."
-            exit 0
-          fi
-          npm publish --provenance --access public
+        run: npm publish --access public
 
   docker:
     name: Publish the container image
