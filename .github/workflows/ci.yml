@@ -6,6 +6,11 @@ on:
   pull_request:
   workflow_dispatch:
 
+# Checking out and building needs nothing else. Spelling it out keeps the
+# token read-only even if the repository default is ever loosened.
+permissions:
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true

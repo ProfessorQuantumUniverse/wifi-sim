@@ -23,12 +23,16 @@
  */
 
 import { createServer } from 'node:http'
-import { createReadStream, existsSync, statSync } from 'node:fs'
+import { createReadStream, existsSync, realpathSync, statSync } from 'node:fs'
 import { extname, join, normalize, resolve, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { spawn } from 'node:child_process'
 
-const ROOT = resolve(fileURLToPath(new URL('../dist', import.meta.url)))
+// Resolved through any symlinks, so that the containment check in resolveFile
+// compares like with like. It stays unresolved when the directory is missing,
+// because that case has its own error message further down.
+const ROOT_PATH = resolve(fileURLToPath(new URL('../dist', import.meta.url)))
+const ROOT = existsSync(ROOT_PATH) ? realpathSync(ROOT_PATH) : ROOT_PATH
 
 const MIME = {
   '.html': 'text/html; charset=utf-8',
@@ -84,11 +88,31 @@ function printHelp() {
 
 /** Resolve a URL path to a file inside ROOT, or null if it escapes it. */
 function resolveFile(urlPath) {
-  const decoded = decodeURIComponent(urlPath.split('?')[0])
+  let decoded
+  try {
+    decoded = decodeURIComponent(urlPath.split('?')[0])
+  } catch {
+    // A malformed percent escape such as "/%zz" makes decodeURIComponent
+    // throw. Thrown from the request handler that would take the whole server
+    // down, so a broken request has to end here as an ordinary miss.
+    return null
+  }
+
   const candidate = normalize(join(ROOT, decoded))
   if (candidate !== ROOT && !candidate.startsWith(ROOT + sep)) return null
-  if (existsSync(candidate) && statSync(candidate).isFile()) return candidate
-  return null
+
+  // The check above only proves the requested *name* sits under ROOT. Resolve
+  // the path for real before serving it, so a symlink inside the directory
+  // cannot hand out a file from somewhere else.
+  let real
+  try {
+    real = realpathSync(candidate)
+  } catch {
+    return null // Missing, unreadable, or a broken symlink.
+  }
+  if (real !== ROOT && !real.startsWith(ROOT + sep)) return null
+
+  return statSync(real).isFile() ? real : null
 }
 
 function openBrowser(url) {
