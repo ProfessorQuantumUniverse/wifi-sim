@@ -7,6 +7,13 @@ electromagnetics.
 
 Nothing is uploaded anywhere. It all runs locally.
 
+<!-- INSTALL BUTTONS START -->
+<p align="center">
+  <a href="https://professorquantumuniverse.github.io/wifi-sim/"><img src="https://img.shields.io/badge/Open-the%20App-0EA5E9?style=for-the-badge&logo=pwa&logoColor=white" alt="Open the app" height="40"></a>
+  <a href="https://github.com/ProfessorQuantumUniverse/wifi-sim/releases/latest"><img src="https://img.shields.io/badge/Download-offline%20build-555555?style=for-the-badge&logo=github&logoColor=white" alt="Download the offline build" height="40"></a>
+</p>
+<!-- INSTALL BUTTONS END -->
+
 **[Open the app](https://professorquantumuniverse.github.io/wifi-sim/)** ·
 **[Documentation](https://professorquantumuniverse.github.io/wifi-sim/docs/)** ·
 **[Start here](https://professorquantumuniverse.github.io/wifi-sim/docs/guide/getting-started)**
