@@ -1,5 +1,13 @@
 # WiFi-Sim
 
+> [!WARNING]
+> ## 🚧 Work in progress – early prototype
+> WiFi-Sim is under active development. Expect rough edges, missing features, breaking changes between
+> versions and results that are **not yet validated against real measurements**. Please don't base
+> purchasing or installation decisions on it alone. Bug reports and feedback are very welcome.
+>
+> *Deutsch: Work in Progress, früher Prototyp – Ergebnisse noch nicht mit echten Messungen validiert.*
+
 A free, offline Wi-Fi planning suite that runs in your browser. Upload a photo
 or scan of your floorplan, trace the walls, describe what they are made of,
 place your router, and get a coverage map computed from actual
