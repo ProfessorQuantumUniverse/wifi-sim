@@ -22,7 +22,7 @@ RUN npm install -g npm@11 && npm ci
 COPY . .
 RUN npm run build
 
-FROM nginxinc/nginx-unprivileged:1.27-alpine AS serve
+FROM nginxinc/nginx-unprivileged:1.31-alpine AS serve
 LABEL org.opencontainers.image.title="WiFi-Sim"
 LABEL org.opencontainers.image.description="Physically-based indoor Wi-Fi planning suite"
 LABEL org.opencontainers.image.licenses="GPL-3.0-or-later"
